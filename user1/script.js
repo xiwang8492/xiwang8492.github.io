@@ -32,10 +32,8 @@ const MEDIA_CONSTRAINTS = {
   audio: true,
   video: {width: {min: 720}, height: {min: 1280}, facingMode: 'user'}
 };
-const BLOB_INFO = {type: 'video/webm'};
-const FLUSH_SIZE = 60 * 60;
 
-let recorder, stream, recording = false;
+let recorder, recording = false;
 let chunks = [];
 
 startButton.onclick = onClick;
@@ -51,7 +49,7 @@ async function onClick (event) {
     case finishButton:
       if (!recording) return;
       recorder.stop();
-      const blob = new Blob([chunks], BLOB_INFO);
+      const blob = new Blob([chunks], {type: 'video/webm'});
       const filename = `${Date.now()}-${parseInt(Math.random() * 1000)}.webm`;
       window.alert('切断処理を開始します。\n少々お待ちください。');
       await uploadBytes(ref(storage, filename), blob);
