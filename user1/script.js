@@ -36,7 +36,6 @@ const BLOB_INFO = {type: 'video/webm'};
 const FLUSH_SIZE = 60 * 60;
 
 let recorder, stream, recording = false;
-let blob = new Blob([], BLOB_INFO);
 let chunks = [];
 
 startButton.onclick = onClick;
@@ -52,10 +51,8 @@ async function onClick (event) {
     case finishButton:
       if (!recording) return;
       recorder.stop();
-      console.log('録画を終了しました。');
-      blob = flush(blob);
+      const blob = new Blob([chunks], BLOB_INFO);
       const filename = `${Date.now()}-${parseInt(Math.random() * 1000)}.webm`;
-      console.log('ファイル名: ' + filename);
       window.alert('切断処理を開始します。\n少々お待ちください。');
       await uploadBytes(ref(storage, filename), blob);
       window.alert('切断処理が完了しました。');
@@ -77,7 +74,6 @@ function resolve (mediaStream) {
   } catch {
     return reject();
   }
-  console.log('MediaRecorderの初期化に成功しました。')
   recorder.addEventListener('dataavailable', function (event) {
     const data = event.data;
     if (data && data.size > 0) {
@@ -87,19 +83,12 @@ function resolve (mediaStream) {
       ctx.drawImage(video, 0, 0, video.videoWidth, canvas.height, 0, 0, video.videoWidth / 4, canvas.height / 4);
       db_set(user_1_ref, canvas.toDataURL('image/jpeg'));
     }
-    if (chunks.length === FLUSH_SIZE) blob = flush(blob);
   }, false);
   recorder.start(1000 / 60);
-  console.log('録画を開始します。');
   recording = true;
 }
 
 function reject (error) {
   console.log(error);
   window.alert('この端末は対応していない可能性がります。');
-}
-
-function flush (blob) {
-  const tmp = chunks.splice(0, FLUSH_SIZE);
-  return new Blob([blob].concat(tmp), BLOB_INFO);
 }
