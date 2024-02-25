@@ -1,8 +1,5 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <style>
+@charser 'utf-8';
+
 html {
   font: 20px serif;
   user-select: none;
@@ -37,17 +34,3 @@ body {
   border-radius: 50%;
   grid-row: 3; grid-column: 4;
 }
-    </style>
-  </head>
-  <body>
-    <div id="wrapper">
-      <video id="video"></video>
-      <canvas id="canvas" style="display: none"></canvas>
-      <img id="img">
-      <button id="start-button"></button>
-      <button id="finish-button"></button>
-    </div>
-    <script type="module" src="script.js"></script>
-  </body>
-</html>
-
