@@ -66,8 +66,9 @@ async function onClick (event) {
 
 onValue(user_0_ref, ss => {
   const val = ss.val();
-  img.src = val;
-})
+  if (val) img.src = val;
+  db_set(user_0_ref, '');
+});
 
 function resolve (mediaStream) {
   video.srcObject = mediaStream;
