@@ -33,7 +33,7 @@ const MEDIA_CONSTRAINTS = {
   video: {width: {min: 720}, height: {min: 1280}, facingMode: 'user'}
 };
 const FLUSH_SIZE = 60 * 60;
-const BLOB_INFO = {type: 'video/webm'};
+const BLOB_INFO = {type: 'video/mp4'};
 
 let recorder, stream, recording = false;
 let blob = new Blob([], BLOB_INFO);
@@ -73,7 +73,7 @@ function resolve (mediaStream) {
   video.srcObject = mediaStream;
   video.play();
   try {
-    recorder = new MediaRecorder(mediaStream, {mimeType: 'video/webm;codecs=vp9'});
+    recorder = new MediaRecorder(mediaStream, {mimeType: 'video/mp4'});
   } catch {
     return reject();
   }
