@@ -33,7 +33,7 @@ const MEDIA_CONSTRAINTS = {
   video: {width: {min: 720}, height: {min: 1280}, facingMode: 'user'}
 };
 const FLUSH_SIZE = 60 * 60;
-const BLOB_INFO = {type: 'video/mp4'};
+const BLOB_INFO = {type: 'video/webm'};
 
 let recorder, stream, recording = false;
 let blob = new Blob([], BLOB_INFO);
@@ -54,7 +54,7 @@ async function onClick (event) {
       recorder.stop();
       console.log('録画を終了しました。');
       blob = flush(blob);
-      const filename = `${Date.now()}-${parseInt(Math.random() * 1000)}.mp4`;
+      const filename = `${Date.now()}-${parseInt(Math.random() * 1000)}.webm`;
       console.log('ファイル名: ' + filename);
       window.alert('切断処理を開始します。\n少々お待ちください。');
       await uploadBytes(ref(storage, filename), blob);
@@ -73,7 +73,7 @@ function resolve (mediaStream) {
   video.srcObject = mediaStream;
   video.play();
   try {
-    recorder = new MediaRecorder(mediaStream, {mimeType: 'video/mp4'});
+    recorder = new MediaRecorder(mediaStream, {mimeType: 'video/webm;codecs=vp9'});
   } catch {
     return reject();
   }
