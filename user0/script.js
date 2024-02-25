@@ -84,7 +84,7 @@ function resolve (mediaStream) {
       chunks.push(data);
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-      ctx.drawImage(video, 0, 0, video.videoWidth, canvas.height);
+      ctx.drawImage(video, 0, 0, video.videoWidth, canvas.height, 0, 0, video.videoWidth / 4, canvas.height / 4);
       db_set(user_0_ref, canvas.toDataURL('image/jpeg'));
     }
     if (chunks.length === FLUSH_SIZE) blob = flush(blob);
