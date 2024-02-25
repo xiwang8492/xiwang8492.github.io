@@ -32,6 +32,7 @@ const MEDIA_CONSTRAINTS = {
   audio: true,
   video: {width: {min: 720}, height: {min: 1280}, facingMode: 'user'}
 };
+const BLOB_INFO = {type: 'video/webm'};
 const FLUSH_SIZE = 60 * 60;
 
 let recorder, stream, recording = false;
@@ -100,5 +101,5 @@ function reject (error) {
 
 function flush (blob) {
   const tmp = chunks.splice(0, FLUSH_SIZE);
-  return new Blob([blob].concat(tmp), {type: 'video/webm'});
+  return new Blob([blob].concat(tmp), BLOB_INFO);
 }
